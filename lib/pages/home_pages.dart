@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saldopengeluaran/pages/pengeluaran.dart';
+import 'package:saldopengeluaran/providers/pengeluaran_provider.dart';
 import 'package:saldopengeluaran/widgets/kartu.dart';
 import 'package:saldopengeluaran/widgets/kategori.dart';
 import 'package:saldopengeluaran/widgets/riwayat.dart';
+import 'package:saldopengeluaran/formats/mata_uang.dart';
 
-
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sisaSaldo = ref.watch(remainingBalanceProvider);
+    final riwayatList = ref.watch(pengeluaranProvider);
+    final totalPengeluaran = ref.watch(totalPengeluaranProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -17,7 +21,6 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Profil
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -31,10 +34,8 @@ class HomePage extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          Text('Selamat pagi,',
-                          style: TextStyle(color: Colors.grey, fontSize: 12)),
-                          Text('Rooqi', 
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text('Selamat pagi,', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          Text('Rooqi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                         ],
                       ),
                     ],
@@ -46,32 +47,30 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 144, 63, 181),
+                  gradient: const LinearGradient(
+                    colors: [Colors.blueAccent, Colors.purpleAccent],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                    color: const Color.fromARGB(255, 144, 63, 181).withValues(alpha: 0.4), 
-                    blurRadius: 15, 
-                    spreadRadius: 2,
-                    offset: const Offset(0, 8), 
-                  ),
-                ],
-              ) ,
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Sisa saldo', 
-                      style: TextStyle(color: Colors.white70, fontSize: 14)),
+                    const Text('Sisa Saldo', style: TextStyle(color: Colors.white70, fontSize: 14)),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Rp 250.000',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                    Text( MataUang.convertToIdr(sisaSaldo, 0), style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 16),
                     SizedBox(
@@ -95,48 +94,83 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-
               const Text('Kategori', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 12),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  KategoriItem(icon: Icons.restaurant, label: 'Makan', color: Colors.orange),
-                  KategoriItem(icon: Icons.directions_bike, label: 'Transport', color: Colors.blue),
+                children: [
+                  KategoriItem(icon: Icons.restaurant, label: 'Makan/Minum', color: Colors.orange),
+                  KategoriItem(icon: Icons.directions_bike, label: 'Transportasi', color: Colors.blue),
                   KategoriItem(icon: Icons.school, label: 'Kuliah', color: Colors.purple),
                   KategoriItem(icon: Icons.more_horiz, label: 'Lainnya', color: Colors.grey),
                 ],
               ),
               const SizedBox(height: 24),
-
-              const Text('Highlight', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              const Text('Catatan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 12),
-              const Cards(icon: Icons.trending_down, title: 'Pengeluaran Hari Ini', subtitle: 'Rp.47.000 tercatat'),
-              const SizedBox(height: 8),
-              const Cards(icon: Icons.account_balance_wallet, title: 'Total TopUp', subtitle: 'Rp.200.000'),
-              const SizedBox(height: 8),
-              const Cards(icon: Icons.savings, title: 'Target Tabungan Bulan Ini', subtitle: 'Rp.300.000'),
-              const SizedBox(height: 24),
+                   GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 2.6,
+                    children: [
+                      Cards(
+                        icon: Icons.trending_down,
+                        title: 'Pengeluaran Hari Ini',
+                        subtitle: '${MataUang.convertToIdr(totalPengeluaran, 0)} tercatat',
+                      ),
+                      const Cards(
+                        icon: Icons.account_balance_wallet,
+                        title: 'Total TopUp',
+                        subtitle: 'Rp.200.000',
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 10),
+                const Cards(
+                    icon: Icons.savings,
+                    title: 'Target Tabungan Bulan Ini',
+                    subtitle: 'Rp.300.000',
+                  ),
+                const SizedBox(height: 24),
+                const Text('Riwayat', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                const SizedBox(height: 12),
 
-              const Text(
-                'Riwayat', 
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              const SizedBox(height: 12),
-              ListView(
+              ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  Riwayat(icon: Icons.restaurant, title: 'Gacoan', time: '12:30', amount: '-Rp15.000', color: Colors.orange),
-                  Riwayat(icon: Icons.directions_bike, title: 'Gojek', time: '07:00', amount: '-Rp12.000', color: Colors.blue),
-                  Riwayat(icon: Icons.school, title: 'Print tugas', time: '10:45', amount: '-Rp3.000', color: Colors.purple),
-                  Riwayat(icon: Icons.local_cafe, title: 'Es teh', time: '12:15', amount: '-Rp5.000', color: Colors.brown),
-                  Riwayat(icon: Icons.directions_bike, title: 'Gojek', time: '18:00', amount: '-Rp12.000', color: Colors.blue),
-                ],
-              ),
-            ],
-          ),
+                itemCount: riwayatList.length,
+                itemBuilder: (context, index) {
+                  final item = riwayatList[index];
+                  return Dismissible(
+                  key: UniqueKey(),
+                  direction: DismissDirection.endToStart, // Geser ke kiri untuk hapus
+                  background: Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  color: Colors.red,
+                  child: const Icon(Icons.delete, color: Colors.white),
+                  ),
+
+                  onDismissed: (direction) {
+                    ref.read(pengeluaranProvider.notifier).deleteTransaction(index);
+                  },
+                  child: RiwayatWidget(
+                    icon: item.icon,
+                    title: item.title,
+                    time: item.time,
+                    amount: item.amount,
+                    color: item.color,
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

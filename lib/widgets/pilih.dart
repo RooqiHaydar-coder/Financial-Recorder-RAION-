@@ -6,13 +6,12 @@ class Pilih extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const Pilih({
-    super.key, 
-    required this.label, 
-    required this.icon, 
-    required this.isSelected, 
-    required this.onTap
-    });
+  const Pilih({super.key, 
+  required this.label, 
+  required this.icon, 
+  required this.isSelected, 
+  required this.onTap
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +19,7 @@ class Pilih extends StatelessWidget {
       label: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: 
-          isSelected ? Colors.white : Colors.black),
+          Icon(icon, size: 16, color: isSelected ? Colors.white : Colors.black),
           const SizedBox(width: 6),
           Text(label),
         ],
