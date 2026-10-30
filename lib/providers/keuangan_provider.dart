@@ -10,7 +10,7 @@ class PengeluaranNotifier extends Notifier<List<DompetModel>> {
     return [
       DompetModel(icon: Icons.restaurant, title: 'Gacoan', time: '12:30', amount: 15000, color: Colors.orange),
       DompetModel(icon: Icons.directions_bike, title: 'Gojek', time: '07:00', amount: 12000, color: Colors.blue),
-      DompetModel(icon: Icons.school, title: 'Print tugas', time: '10:45', amount: 3000, color: Colors.purple),
+      DompetModel(icon: Icons.school, title: 'Kebutuhan Ospek', time: '10:45', amount: 3000, color: Colors.purple),
       DompetModel(icon: Icons.restaurant, title: 'Es teh', time: '12:15', amount: 5000, color: Colors.orange),
       DompetModel(icon: Icons.directions_bike, title: 'Gojek', time: '18:00', amount: 12000, color: Colors.blue),
     ];

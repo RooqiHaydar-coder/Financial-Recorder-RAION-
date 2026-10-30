@@ -19,7 +19,7 @@ class KategoriItem extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 25,
-          backgroundColor: color.withOpacity(0.2),
+          backgroundColor: color.withValues(alpha: 0.2),
           child: Icon(icon, color: color),
         ),
         const SizedBox(height: 6),
@@ -28,7 +28,7 @@ class KategoriItem extends StatelessWidget {
           child: Text(
             label,
             textAlign: TextAlign.center,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 12),
           ),
