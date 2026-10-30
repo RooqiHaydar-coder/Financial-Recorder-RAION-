@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:flutter_riverpod/legacy.dart';
-
 import '../models/pengeluaran_model.dart';
-
 
 
 class PengeluaranNotifier extends Notifier<List<DompetModel>> {
@@ -18,10 +14,7 @@ class PengeluaranNotifier extends Notifier<List<DompetModel>> {
       DompetModel(icon: Icons.restaurant, title: 'Es teh', time: '12:15', amount: 5000, color: Colors.orange),
       DompetModel(icon: Icons.directions_bike, title: 'Gojek', time: '18:00', amount: 12000, color: Colors.blue),
     ];
-
   }
-
-
 
   void addTransaction(String title, int amount, String category) {
     IconData icon;
@@ -41,6 +34,7 @@ class PengeluaranNotifier extends Notifier<List<DompetModel>> {
         color = Colors.orange;
         break;
     }
+
     final newTransaction = DompetModel(
       icon: icon,
       title: title.isEmpty ? category : title,
@@ -48,8 +42,11 @@ class PengeluaranNotifier extends Notifier<List<DompetModel>> {
       amount: amount,
       color: color,
     );
+
     state = [newTransaction, ...state];
+
   }
+
   void deleteTransaction(int index) {
   state = [
     for (int i = 0; i < state.length; i++)

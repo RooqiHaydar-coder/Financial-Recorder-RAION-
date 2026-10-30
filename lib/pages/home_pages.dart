@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saldopengeluaran/pages/pengeluaran.dart';
-import 'package:saldopengeluaran/providers/pengeluaran_provider.dart';
+import 'package:saldopengeluaran/providers/keuangan_provider.dart';
 import 'package:saldopengeluaran/widgets/kartu.dart';
 import 'package:saldopengeluaran/widgets/kategori.dart';
 import 'package:saldopengeluaran/widgets/riwayat.dart';
@@ -33,7 +33,7 @@ class HomePage extends ConsumerWidget {
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text('Selamat pagi,', style: TextStyle(color: Colors.grey, fontSize: 12)),
                           Text('Rooqi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                         ],

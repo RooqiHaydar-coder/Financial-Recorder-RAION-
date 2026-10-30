@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:saldopengeluaran/providers/pengeluaran_provider.dart';
-import 'package:saldopengeluaran/widgets/pilih.dart';
+import 'package:saldopengeluaran/providers/keuangan_provider.dart';
+import 'package:saldopengeluaran/widgets/pilih.dart';  
 
 class CttPengeluaran extends ConsumerStatefulWidget {
   const CttPengeluaran({super.key});
@@ -29,7 +29,7 @@ class _CttPengeluaranState extends ConsumerState<CttPengeluaran> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Tambah Pengeluaran', style: TextStyle(color: Colors.black, fontSize: 16)),
+        title: const Text ('Tambah Pengeluaran', style: TextStyle(color: Colors.black, fontSize: 16)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -38,53 +38,30 @@ class _CttPengeluaranState extends ConsumerState<CttPengeluaran> {
           children: [
             const Text('Nominal', style: TextStyle(color: Colors.grey, fontSize: 12)),
             TextField(
-
               controller: _nominalController,
-
               keyboardType: TextInputType.number,
-
               style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-
               decoration: const InputDecoration(
-
                 prefixText: 'Rp ',
-
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-
                 hintText: '0',
-
                 border: InputBorder.none,
-
               ),
-
             ),
 
             const Divider(thickness: 1),
-
             const SizedBox(height: 20),
-
             const Text('Kategori', style: TextStyle(color: Colors.grey, fontSize: 12)),
-
             const SizedBox(height: 10),
-
             Row(
-
               children: [
-
                 Pilih(label: 'Makan/Minum', icon: Icons.restaurant, isSelected: selectedKategori == 'Makan/Minum', onTap: () => setState(() => selectedKategori = 'Makan/Minum')),
-
                 const SizedBox(width: 8),
-
                 Pilih(label: 'Transportasi', icon: Icons.directions_bike, isSelected: selectedKategori == 'Transportasi', onTap: () => setState(() => selectedKategori = 'Transportasi')),
-
                 const SizedBox(width: 8),
-
                 Pilih(label: 'Kuliah', icon: Icons.school, isSelected: selectedKategori == 'Kuliah', onTap: () => setState(() => selectedKategori = 'Kuliah')),
-
               ],
-
             ),
-
             const SizedBox(height: 8),
 
             Pilih(label: 'Lainnya', icon: Icons.more_horiz, isSelected: selectedKategori == 'Lainnya', onTap: () => setState(() => selectedKategori = 'Lainnya')),

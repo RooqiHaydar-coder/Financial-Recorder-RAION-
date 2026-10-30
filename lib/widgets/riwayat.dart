@@ -46,36 +46,19 @@ class RiwayatWidget extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                ),
+              children: [ Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87,),),
                 const SizedBox(height: 2),
-                Text(
-                  time,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+                Text(time, style: const TextStyle(fontSize: 12, color: Colors.grey,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Text(
-            '-Rp${MataUang.convertToIdr(amount, 0)}',
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.redAccent,
-            ),
+        ),
+          Text('-${MataUang.convertToIdr(amount, 0)}', style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Colors.redAccent,
+          ),
           ),
         ],
       ),
     );
-  }
+  } 
 }

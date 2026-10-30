@@ -21,6 +21,7 @@ class Cards extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade200),
       ),
+      
       child: Row(
         children: [
           Icon(icon, color: Colors.purple),
