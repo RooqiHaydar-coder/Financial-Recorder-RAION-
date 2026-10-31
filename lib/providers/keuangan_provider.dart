@@ -28,7 +28,7 @@ class PengeluaranNotifier extends Notifier<List<DompetModel>> {
         icon = Icons.school;
         color = Colors.purple;
         break;
-      case 'Makanan':
+      case 'Makan/Minum':
         icon = Icons.restaurant;
         color = Colors.orange;
         break;
